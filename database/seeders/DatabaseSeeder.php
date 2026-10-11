@@ -15,11 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Buat User (Admin, Editor, User)
+        \App\Models\User::factory()->create(['name' => 'Admin Boss', 'email' => 'admin@tes.com', 'role' => 'admin']);
+        \App\Models\User::factory()->create(['name' => 'Si Editor', 'email' => 'editor@tes.com', 'role' => 'editor']);
+        \App\Models\User::factory()->create(['name' => 'User Biasa', 'email' => 'user@tes.com', 'role' => 'user']);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Buat 5 Kategori
+        for($i=1; $i<=5; $i++) {
+            \App\Models\Category::create(['name' => "Kategori $i", 'slug' => "kategori-$i"]);
+        }
+
+        // Buat 50 Produk pake factory tadi
+        \App\Models\Product::factory(50)->create();
     }
 }
