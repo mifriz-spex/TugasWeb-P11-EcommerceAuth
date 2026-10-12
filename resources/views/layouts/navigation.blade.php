@@ -15,6 +15,17 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <!-- MENU KHUSUS SESUAI ROLE (DESKTOP) -->
+                    @if (Auth::user()->role === 'admin')
+                        <x-nav-link href="{{ url('/admin/dashboard') }}" :active="request()->is('admin/dashboard')" class="!text-red-600 hover:!text-red-800 font-bold border-b-2 !border-red-500">
+                            👑 Admin Panel
+                        </x-nav-link>
+                    @elseif (Auth::user()->role === 'editor')
+                        <x-nav-link href="{{ url('/editor/dashboard') }}" :active="request()->is('editor/dashboard')" class="!text-blue-600 hover:!text-blue-800 font-bold border-b-2 !border-blue-500">
+                            📝 Editor Area
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -24,6 +35,15 @@
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
+
+                            <!-- BADGE ROLE DI DESKTOP -->
+                            @if(Auth::user()->role === 'admin')
+                                <span class="ms-2 px-2 py-0.5 text-[10px] font-bold rounded-full bg-red-100 text-red-700 border border-red-200 shadow-sm uppercase">Admin</span>
+                            @elseif(Auth::user()->role === 'editor')
+                                <span class="ms-2 px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-100 text-blue-700 border border-blue-200 shadow-sm uppercase">Editor</span>
+                            @else
+                                <span class="ms-2 px-2 py-0.5 text-[10px] font-bold rounded-full bg-gray-100 text-gray-700 border border-gray-200 shadow-sm uppercase">User</span>
+                            @endif
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -70,12 +90,34 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <!-- MENU KHUSUS SESUAI ROLE (MOBILE) -->
+            @if (Auth::user()->role === 'admin')
+                <x-responsive-nav-link href="{{ url('/admin/dashboard') }}" :active="request()->is('admin/dashboard')" class="text-red-600 font-bold bg-red-50 border-l-4 border-red-500">
+                    👑 Admin Panel
+                </x-responsive-nav-link>
+            @elseif (Auth::user()->role === 'editor')
+                <x-responsive-nav-link href="{{ url('/editor/dashboard') }}" :active="request()->is('editor/dashboard')" class="text-blue-600 font-bold bg-blue-50 border-l-4 border-blue-500">
+                    📝 Editor Area
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                <div class="flex items-center gap-2">
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                    
+                    <!-- BADGE ROLE DI MOBILE -->
+                    @if(Auth::user()->role === 'admin')
+                        <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-red-100 text-red-700 uppercase">Admin</span>
+                    @elseif(Auth::user()->role === 'editor')
+                        <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-100 text-blue-700 uppercase">Editor</span>
+                    @else
+                        <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-gray-100 text-gray-700 uppercase">User</span>
+                    @endif
+                </div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
