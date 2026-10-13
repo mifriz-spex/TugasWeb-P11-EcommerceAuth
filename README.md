@@ -1,116 +1,92 @@
-# Tugas Rutin 11 - E-Commerce DB + Secure Auth
+# Tugas Rutin 11 — E-Commerce Auth & Tinker Laravel
 
-Proyek ini adalah tugas mata kuliah pemrograman web yang berfokus pada perancangan Database E-Commerce, Eloquent ORM, serta implementasi Keamanan dan Autentikasi menggunakan Laravel 13.
+Proyek ini dibuat untuk memenuhi tugas mata kuliah Pemrograman Web. Proyek ini mengimplementasikan sistem Autentikasi (Auth) dan pengujian model/database menggunakan Laravel Tinker pada studi kasus E-Commerce.
 
-## 📌 Bukti Pengerjaan Tugas
+## 🛠️ Langkah Instalasi & Menjalankan Proyek
 
-Di bawah ini adalah screenshot bukti pengerjaan atau screenshot soal yang direferensikan.
-*(Pastikan file `IMG_20261008_103539.jpg` ditaruh di folder yang sama dengan file `README.md` ini supaya gambarnya muncul)*
-
-## 🚀 Fitur Utama
-
-**Bagian A - Database & Eloquent**
-
-* **Migrasi Database:** Terdiri dari 7 tabel saling berelasi (`users`, `categories`, `products`, `orders`, `order_items`, `reviews`, `posts`) lengkap dengan *Foreign Key Constraints*.
-
-* **Eloquent Relationships:** Relasi One-to-Many dan Belongs-To antar model.
-
-* **Local Scope:** Implementasi `scopeLowStock` pada model `Product` untuk memfilter stok yang menipis (< 10).
-
-* **Factory & Seeder:** Men-generate 50+ data produk realistis, kategori, dan 3 akun dengan role berbeda secara otomatis.
-
-**Bagian B - Auth & Security**
-
-* **Authentication:** Menggunakan **Laravel Breeze** (Login, Register, Logout).
-
-* **Role Management:** Multi-role user (Admin, Editor, User Biasa) yang diatur di tingkat database.
-
-* **Custom Middleware:** Proteksi rute khusus menggunakan middleware `role` (contoh: `/admin/dashboard` dan `/editor/dashboard`).
-
-* **Authorization:** Menggunakan `PostPolicy` untuk membatasi aksi edit/delete postingan hanya untuk pemilik asli postingan dan Admin.
-
-## 🛠️ Persyaratan Sistem
-
-* PHP 8.2 atau lebih baru
-
-* Composer
-
-* Node.js (Minimal v20) & NPM
-
-* SQLite (Default) / MySQL
-
-## ⚙️ Cara Instalasi & Menjalankan Proyek
-
-1. **Clone atau Buka terminal** dan arahkan ke direktori proyek ini.
-
-2. **Install dependensi PHP dan Node.js:**
-
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/username/TugasWeb-P11-EcommerceAuth.git
+   cd TugasWeb-P11-EcommerceAuth
    ```
+
+2. **Install Dependency Composer & NPM**
+   ```bash
    composer install
    npm install
-   
-   ```
-
-3. **Konfigurasi Environment:**
-   Copy file `.env.example` menjadi `.env` (Jika belum ada).
-
-   ```
-   cp .env.example .env
-   php artisan key:generate
-   
-   ```
-
-   *Jika menggunakan MySQL, sesuaikan pengaturan DB di file `.env`.*
-
-4. **Migrasi dan Seeding Database:**
-   Perintah ini akan membuat tabel dan mengisi data awal (termasuk 50 produk, 5 kategori, dan 3 akun user role).
-
-   ```
-   php artisan migrate:fresh --seed
-   
-   ```
-
-5. **Build Asset Frontend (Tailwind & Vite):**
-
-   ```
    npm run build
-   
    ```
 
-6. **Jalankan Server Lokal:**
-
+3. **Konfigurasi File Environment (.env)**
+   Salin file `.env.example` menjadi `.env`:
+   ```bash
+   cp .env.example .env
    ```
+   Atur koneksi database pada file `.env`:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=db_tugas_p11
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+4. **Generate Application Key, Migrate & Seed**
+   ```bash
+   php artisan key:generate
+   php artisan migrate --seed
+   ```
+
+5. **Jalankan Development Server**
+   ```bash
    php artisan serve
-   
    ```
+   Buka URL `http://127.0.0.1:8000` di browser.
 
-   Akses aplikasi di browser melalui: `http://localhost:8000`
+---
 
-## 🔑 Akun Testing (Hasil Seeder)
+## 📸 Hasil Screenshot (SS)
 
-Gunakan akun berikut untuk menguji *Role Management* dan *Middleware*:
+Berikut adalah dokumentasi hasil dari pengerjaan tugas ini, dibagi menjadi dua bagian:
 
-| Role | Email | Password | Hak Akses | 
-| ----- | ----- | ----- | ----- | 
-| **Admin** | `admin@tes.com` | `password` | Bebas akses ke rute admin dan bebas by-pass `PostPolicy` | 
-| **Editor** | `editor@tes.com` | `password` | Akses ke rute khusus Editor | 
-| **User** | `user@tes.com` | `password` | Hanya akses halaman publik / rute khusus user | 
+### Bagian A: Pengujian Laravel Tinker
+*(Kumpulan screenshot saat melakukan pengujian manipulasi data model menggunakan command line Laravel Tinker)*
 
-## 🧪 Testing Rute (Mode Incognito)
+**1. Screenshot Tinker 1**
+![Tinker 1](./screenshoot%20tugas/tinker/Screenshot%20(186).png)
 
-Untuk menguji keamanan rute (Route Protection), Anda bisa mencoba langkah berikut:
+**2. Screenshot Tinker 2**
+![Tinker 2](screenshoot%20tugas/tinker/Screenshot%20(187).png)
 
-1. Buka browser dalam mode **Incognito / Private**.
+**3. Screenshot Tinker 3**
+![Tinker 3](screenshoot%20tugas/tinker/Screenshot%20(188).png)
 
-2. Login menggunakan akun **User** (`user@tes.com`).
+**4. Screenshot Tinker 4**
+![Tinker 4](screenshoot%20tugas/tinker/Screenshot%20(189).png)
 
-3. Coba akses URL `http://localhost:8000/admin/dashboard` secara manual di *address bar*.
+**5. Screenshot Tinker 5**
+![Tinker 5](./screenshoot%20tugas/tinker/Screenshot%202026-10-13%20145208.png)
 
-4. Anda akan mendapatkan pesan error **403 Forbidden** (Sesuai dengan ekspektasi tugas).
+### Bagian B: Tampilan Web (Auth, User & Admin)
+*(Kumpulan screenshot antarmuka web, termasuk fitur login/register, halaman user, dan dashboard admin)*
 
-5. Logout dari akun User.
+**1. Tampilan Halaman USER**
+![Web Tampilan 1](screenshoot%20tugas/tampilan%20user%20&%20admin/Dashboard-USER.png)
 
-6. Login kembali menggunakan akun **Admin** (`admin@tes.com`).
+**2. Tampilan Halaman USER Jika Mencoba Masuk Ke Halaman ADMIN**
+![Web Tampilan 2](screenshoot%20tugas/tampilan%20user%20&%20admin/Authentication.png)
 
-7. Akses kembali URL `http://localhost:8000/admin/dashboard`, dan halaman akan berhasil dimuat dengan sukses.
+**3. Tampilan Halaman ADMIN**
+![Web Tampilan 3](screenshoot%20tugas/tampilan%20user%20&%20admin/DASHBOARD-ADMIN.png)
 
+---
+
+## 📂 Struktur Direktori Penting
+
+- **`app/Models/`**: Berisi sekumpulan Model Eloquent (User, Product, Category, Order, Post, Review).
+- **`app/Http/Controllers/Auth/`**: Logic untuk menangani autentikasi.
+- **`database/migrations/`**: Skema tabel database untuk sistem E-Commerce.
+- **`resources/views/`**: File antarmuka blade, termasuk folder `auth/` untuk UI login dan register.
+- **`routes/web.php` & `routes/auth.php`**: Routing utama dan routing khusus autentikasi.
+- **`screenshoot tugas/`**: Folder dokumentasi tangkapan layar tugas.
