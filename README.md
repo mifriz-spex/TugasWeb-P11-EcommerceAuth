@@ -1,58 +1,116 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Tugas Rutin 11 - E-Commerce DB + Secure Auth
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Proyek ini adalah tugas mata kuliah pemrograman web yang berfokus pada perancangan Database E-Commerce, Eloquent ORM, serta implementasi Keamanan dan Autentikasi menggunakan Laravel 13.
 
-## About Laravel
+## 📌 Bukti Pengerjaan Tugas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Di bawah ini adalah screenshot bukti pengerjaan atau screenshot soal yang direferensikan.
+*(Pastikan file `IMG_20261008_103539.jpg` ditaruh di folder yang sama dengan file `README.md` ini supaya gambarnya muncul)*
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Bagian A - Database & Eloquent**
 
-## Learning Laravel
+* **Migrasi Database:** Terdiri dari 7 tabel saling berelasi (`users`, `categories`, `products`, `orders`, `order_items`, `reviews`, `posts`) lengkap dengan *Foreign Key Constraints*.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* **Eloquent Relationships:** Relasi One-to-Many dan Belongs-To antar model.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* **Local Scope:** Implementasi `scopeLowStock` pada model `Product` untuk memfilter stok yang menipis (< 10).
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+* **Factory & Seeder:** Men-generate 50+ data produk realistis, kategori, dan 3 akun dengan role berbeda secara otomatis.
 
-## Agentic Development
+**Bagian B - Auth & Security**
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+* **Authentication:** Menggunakan **Laravel Breeze** (Login, Register, Logout).
 
-```bash
-composer require laravel/boost --dev
+* **Role Management:** Multi-role user (Admin, Editor, User Biasa) yang diatur di tingkat database.
 
-php artisan boost:install
-```
+* **Custom Middleware:** Proteksi rute khusus menggunakan middleware `role` (contoh: `/admin/dashboard` dan `/editor/dashboard`).
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+* **Authorization:** Menggunakan `PostPolicy` untuk membatasi aksi edit/delete postingan hanya untuk pemilik asli postingan dan Admin.
 
-## Contributing
+## 🛠️ Persyaratan Sistem
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* PHP 8.2 atau lebih baru
 
-## Code of Conduct
+* Composer
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* Node.js (Minimal v20) & NPM
 
-## Security Vulnerabilities
+* SQLite (Default) / MySQL
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## ⚙️ Cara Instalasi & Menjalankan Proyek
 
-## License
+1. **Clone atau Buka terminal** dan arahkan ke direktori proyek ini.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+2. **Install dependensi PHP dan Node.js:**
+
+   ```
+   composer install
+   npm install
+   
+   ```
+
+3. **Konfigurasi Environment:**
+   Copy file `.env.example` menjadi `.env` (Jika belum ada).
+
+   ```
+   cp .env.example .env
+   php artisan key:generate
+   
+   ```
+
+   *Jika menggunakan MySQL, sesuaikan pengaturan DB di file `.env`.*
+
+4. **Migrasi dan Seeding Database:**
+   Perintah ini akan membuat tabel dan mengisi data awal (termasuk 50 produk, 5 kategori, dan 3 akun user role).
+
+   ```
+   php artisan migrate:fresh --seed
+   
+   ```
+
+5. **Build Asset Frontend (Tailwind & Vite):**
+
+   ```
+   npm run build
+   
+   ```
+
+6. **Jalankan Server Lokal:**
+
+   ```
+   php artisan serve
+   
+   ```
+
+   Akses aplikasi di browser melalui: `http://localhost:8000`
+
+## 🔑 Akun Testing (Hasil Seeder)
+
+Gunakan akun berikut untuk menguji *Role Management* dan *Middleware*:
+
+| Role | Email | Password | Hak Akses | 
+| ----- | ----- | ----- | ----- | 
+| **Admin** | `admin@tes.com` | `password` | Bebas akses ke rute admin dan bebas by-pass `PostPolicy` | 
+| **Editor** | `editor@tes.com` | `password` | Akses ke rute khusus Editor | 
+| **User** | `user@tes.com` | `password` | Hanya akses halaman publik / rute khusus user | 
+
+## 🧪 Testing Rute (Mode Incognito)
+
+Untuk menguji keamanan rute (Route Protection), Anda bisa mencoba langkah berikut:
+
+1. Buka browser dalam mode **Incognito / Private**.
+
+2. Login menggunakan akun **User** (`user@tes.com`).
+
+3. Coba akses URL `http://localhost:8000/admin/dashboard` secara manual di *address bar*.
+
+4. Anda akan mendapatkan pesan error **403 Forbidden** (Sesuai dengan ekspektasi tugas).
+
+5. Logout dari akun User.
+
+6. Login kembali menggunakan akun **Admin** (`admin@tes.com`).
+
+7. Akses kembali URL `http://localhost:8000/admin/dashboard`, dan halaman akan berhasil dimuat dengan sukses.
+
